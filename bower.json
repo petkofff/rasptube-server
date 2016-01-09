@@ -1,0 +1,22 @@
+{
+  "name": "pitube",
+  "description": "",
+  "main": "index.js",
+  "authors": [
+    "petkofff <gpetkofff@abv.bg>"
+  ],
+  "license": "MIT",
+  "moduleType": [],
+  "homepage": "",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "bootstrap": "~3.3.6",
+    "bootswatch": "~3.3.6+1"
+  }
+}
