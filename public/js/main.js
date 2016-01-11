@@ -1,6 +1,12 @@
 $(document).ready(function() {
 	$("#search-button").click(function() {
-		//TO DO
+		$.ajax({
+			url: "/api/search/"+$("#main-input").val(),
+			method: "GET",
+			success: function(res) {
+				console.log(res);
+			}
+		});
 	});
 
 	$("#queue-button").click(function() {
@@ -11,6 +17,9 @@ $(document).ready(function() {
 	});
 
 	$("#next-button").click(function() {
-		//TO DO
+		$.ajax({
+			url: "/api/next",
+			method: "GET"
+		});
 	});
 });
