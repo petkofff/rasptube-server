@@ -1,8 +1,16 @@
 $(document).ready(function() {
 	var socket = io();
 	
-	socket.on("new song on queue", function(song) {
-		//TO DO
+	socket.on("queue changed or new connection", function(queue) {
+		$("#queue-table > tbody").empty();
+		var i = 0;
+		console.log(queue);
+		for (;i<queue.length;i++) {
+			var col = $('<tr></tr>');
+			col.append($('<th scope="row">'+(i+1)+'</th>'));
+			col.append($('<td>'+queue[i].title+'</td>'));
+			$('#queue-tbody').append(col);
+		}
 	});
 	
 	$("#search-button").click(function() {

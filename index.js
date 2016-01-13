@@ -23,24 +23,33 @@ function initPlayer(id, queue) {
   player.on('close', function() {
     queue.shift();
     if (queue[0] !== undefined) initPlayer(queue[0], queue);
+    io.sockets.emit("queue changed or new connection", queue);
   });
 }
 
 function addOnQueue(song, queue) {
   console.log(song.id);
   if (player === null || queue[0] === undefined) {
-    initPlayer(song.id, queue);
+    //initPlayer(song.id, queue);
     queue.push(song);
   }
   else queue.push(song);
   
-  io.on('connection', function(socket) {
-    socket.emit('new song on queue', queue);
-  });
+  io.sockets.emit("queue changed or new connection", queue);
 }
 
+io.on("connection", function(socket) {
+  socket.emit("queue changed or new connection", queue);
+});
+
 app.param('id', function(req, res, next, id) {
-  addOnQueue({id: id, title: null}, queue);
+  youTube.getById(id, function(error, result) {
+    if(error) res.status(400).end();
+    else addOnQueue({
+      id: id, 
+      title: result.items[0].snippet.title
+    }, queue);
+  });
   next();
 });
 
@@ -49,7 +58,7 @@ app.param('title', function(req, res, next, title) {
     if(error) res.status(400).end();
     else addOnQueue({
       id: result.items[0].id.videoId,
-      title: null
+      title: result.items[0].snippet.title
     }, queue);
   });
   next();
@@ -77,6 +86,7 @@ app.get('/api/search/:query', function(req, res) {
 
 app.get('/api/next', function(req, res) {
   queue.shift();
+  io.sockets.emit("queue changed or new connection", queue);
   if (queue[0] !== undefined) initPlayer(queue[0], queue);
   res.end();
 });

@@ -2,10 +2,11 @@
 <html>
 	<head>
 		<title>player</title>
+		<meta name="viewport" content="initial-scale=1.0 , minimum-scale=1.0 , maximum-scale=1.0" />
 		<link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.css">
 		<link rel="stylesheet" href="bower_components/bootswatch/superhero/bootstrap.css">
 		<script src="bower_components/jquery/dist/jquery.js"></script>
-		<script src="bower_components/socket.io/socket.io.js"></script>
+		<script src="bower_components/socket.io-client/socket.io.js"></script>
 		<script src="js/main.js"></script>
 	</head>
 	<body>
@@ -25,7 +26,15 @@
 			</div>
 			<div class="table-responsive">
 				<table class="table" id="queue-table">
-					
+					<thead>
+						<tr>
+							<th>#</th>
+							<th>Song Name</th>
+						</tr>
+					</thead>
+					<tbody id="queue-tbody">
+						
+					</tbody>
 				</table>
 			</div>
 		</div>
