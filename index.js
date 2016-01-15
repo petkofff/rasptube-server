@@ -3,6 +3,7 @@ var app = express();
 var http = require('http').Server(app);
 var io = require('socket.io')(http);
 var spawn = require('child_process').spawn;
+var exec = require('child_process').exec;
 var YouTube = require('youtube-node');
 var youTube = new YouTube();
 
@@ -17,20 +18,19 @@ youTube.addParam('type', 'video');
 
 app.use(express.static('public'));
 
-function initPlayer(id, queue) {
+function initPlayer(id, queue) {  
   player = spawn("sh", ["pls.sh", "https://www.youtube.com/watch?v="+id]);
-  
+ 
   player.on('close', function() {
     queue.shift();
-    if (queue[0] !== undefined) initPlayer(queue[0], queue);
+    if (queue[0] !== undefined) initPlayer(queue[0].id, queue);
     io.sockets.emit("queue changed or new connection", queue);
   });
 }
 
 function addOnQueue(song, queue) {
-  console.log(song.id);
   if (player === null || queue[0] === undefined) {
-    //initPlayer(song.id, queue);
+    initPlayer(song.id, queue);
     queue.push(song);
   }
   else queue.push(song);
@@ -80,14 +80,11 @@ app.get('/api/queue/title/:title', function(req, res) {
 });
 
 app.get('/api/search/:query', function(req, res) {
-  console.log(queue);
   res.end();
 });
 
 app.get('/api/next', function(req, res) {
-  queue.shift();
-  io.sockets.emit("queue changed or new connection", queue);
-  if (queue[0] !== undefined) initPlayer(queue[0], queue);
+  exec("sh sts.sh");
   res.end();
 });
 

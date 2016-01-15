@@ -25,12 +25,13 @@ $(document).ready(function() {
 
 	$("#queue-button").click(function() {
 		$.ajax({
-			url: "/api/queue/id/"+$("#main-input").val(),
+			url: "/api/queue/title/"+$("#main-input").val(),
 			method: "GET"
 		});
 	});
 
 	$("#next-button").click(function() {
+		console.log("next button");
 		$.ajax({
 			url: "/api/next",
 			method: "GET"
