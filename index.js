@@ -45,10 +45,17 @@ io.on("connection", function(socket) {
 app.param('id', function(req, res, next, id) {
   youTube.getById(id, function(error, result) {
     if(error) res.status(400).end();
-    else addOnQueue({
-      id: id, 
-      title: result.items[0].snippet.title
-    }, queue);
+    else {
+      try {
+        addOnQueue({
+          id: id, 
+          title: result.items[0].snippet.title
+        }, queue);
+      }
+      catch(error) {
+        res.status(400).end();
+      } 
+    }
   });
   next();
 });
@@ -56,10 +63,17 @@ app.param('id', function(req, res, next, id) {
 app.param('title', function(req, res, next, title) {
   youTube.search(title, 1, function(error, result) {
     if(error) res.status(400).end();
-    else addOnQueue({
-      id: result.items[0].id.videoId,
-      title: result.items[0].snippet.title
-    }, queue);
+    else {
+      try {
+        addOnQueue({
+          id: result.items[0].id.videoId, 
+          title: result.items[0].snippet.title
+        }, queue);
+      }
+      catch(error) {
+        res.status(400).end();
+      } 
+    }
   });
   next();
 });

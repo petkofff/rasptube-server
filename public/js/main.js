@@ -1,3 +1,5 @@
+var lastSearchResult = null;
+
 $(document).ready(function() {
 	var socket = io();
 	
@@ -14,12 +16,25 @@ $(document).ready(function() {
 	});
 	
 	$("#search-button").click(function() {
+		function onSearchSuccess(res) {
+			lastSearchResult = res;
+			
+			$("#search-modal").modal("show");
+			$("#search-table > tbody").empty();
+			var i = 0;
+			console.log(res);
+			for (;i<res.items.length && i<10;i++) {
+				var col = $('<tr></tr>');
+				col.append($('<th scope="row"><span class="glyphicon glyphicon-play-circle" '+'onclick="onSearchModalResultClick(lastSearchResult, ' + i + ')"></span></th>'));
+				col.append($('<td>'+res.items[i].snippet.title+'</td>'));
+				$('#search-tbody').append(col);
+			}
+		}
+		
 		$.ajax({
 			url: "/api/search/"+$("#main-input").val(),
 			method: "GET",
-			success: function(res) {
-				console.log(res);
-			}
+			success: onSearchSuccess
 		});
 	});
 
@@ -28,6 +43,8 @@ $(document).ready(function() {
 			url: "/api/queue/title/"+$("#main-input").val(),
 			method: "GET"
 		});
+		
+		$("#main-input").val("");
 	});
 
 	$("#next-button").click(function() {
@@ -38,3 +55,16 @@ $(document).ready(function() {
 		});
 	});
 });
+
+function onSearchModalResultClick(result, clicked) {
+	console.log("pesho");
+	
+	$.ajax({
+		url: "/api/queue/id/"+result.items[clicked].id.videoId,
+		method: "GET"
+	});
+	
+	$("#main-input").val("");
+	
+	$("#search-modal").modal("hide");;
+}

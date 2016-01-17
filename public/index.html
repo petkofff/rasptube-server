@@ -4,8 +4,9 @@
 		<title>player</title>
 		<meta name="viewport" content="initial-scale=1.0 , minimum-scale=1.0 , maximum-scale=1.0" />
 		<link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.css">
-		<link rel="stylesheet" href="bower_components/bootswatch/superhero/bootstrap.css">
+		<link rel="stylesheet" href="bower_components/bootswatch/slate/bootstrap.css">
 		<script src="bower_components/jquery/dist/jquery.js"></script>
+		<script src="bower_components/bootstrap/dist/js/bootstrap.js"></script>
 		<script src="bower_components/socket.io-client/socket.io.js"></script>
 		<script src="js/main.js"></script>
 	</head>
@@ -36,6 +37,34 @@
 						
 					</tbody>
 				</table>
+			</div>
+			<div class="modal fade" tabindex="-1" role="dialog" id="search-modal">
+				<div class="modal-dialog">
+					<div class="modal-content">
+						<div class="modal-header">
+							<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+							<h4 class="modal-title">Search results</h4>
+						</div>
+						<div class="modal-body">
+							<div class="table-responsive">
+								<table class="table" id="search-table">
+									<thead>
+										<tr>
+											<th>#</th>
+											<th>Song Name</th>
+										</tr>
+									</thead>
+									<tbody id="search-tbody">
+						
+									</tbody>
+								</table>
+							</div>
+						</div>
+						<div class="modal-footer">
+							<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+						</div>
+					</div>
+				</div>
 			</div>
 		</div>
 	</body>
