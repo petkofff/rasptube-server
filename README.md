@@ -20,7 +20,14 @@ You're almost ready! RaspTube usues [mpsyt](https://github.com/mps-youtube/mps-y
 ```
 sudo pip3 install mps-youtube
 ```
-If you prefer other player you can change `pls.sh` (first argument shoud be URL to a youtube video) and `sts.sh` (should kill the player).
+If you prefer other player:
+
+```
+cd settings
+sh [your fav player].sh
+```
+
+Or you can change `pls.sh` (first argument shoud be URL to a youtube video) and `sts.sh` (should kill the player).
 
 ##Usage 
 
