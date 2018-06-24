@@ -2,7 +2,7 @@
 
 ## Introduction
 
-Throwing a party and you don't know what music to play? This is the solution for you! RaspTube is a simple nodejs server which lets your guests queue the songs they like (from YouTube).
+YouTube music server, which lets queueing songs from different devices.
 
 ## Instalation
 
